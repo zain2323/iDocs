@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    android:label="Add Workspace"
+    app:startDestination="@id/workspaceFragment">
+
+    <fragment
+        android:id="@+id/workspaceFragment"
+        android:name="com.example.idocs.WorkspaceFragment"
+        android:label="Workspaces"
+        tools:layout="@layout/fragment_workspace">
+        <action
+            android:id="@+id/action_workspaceFragment_to_createNewWorkspaceFragment"
+            app:destination="@id/createNewWorkspaceFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/slide_out_top"
+            app:popEnterAnim="@anim/slide_in_top"
+            app:popExitAnim="@anim/slide_out_bottom"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_workspaceFragment_to_groupFragment"
+            app:destination="@id/groupFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpToInclusive="false">
+            <argument
+                android:name="workspace_id"
+                app:argType="integer" />
+        </action>
+        <action
+            android:id="@+id/action_workspaceFragment_to_stationaryShopsFragment"
+            app:destination="@id/stationaryShopsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/createNewWorkspaceFragment"
+        android:name="com.example.idocs.CreateNewWorkspaceFragment"
+        android:label="Add  Workspace"
+        tools:layout="@layout/fragment_create_new_workspace">
+        <action
+            android:id="@+id/action_createNewWorkspaceFragment_to_workspaceFragment"
+            app:destination="@id/workspaceFragment"
+            app:enterAnim="@anim/slide_out_bottom"
+            app:exitAnim="@anim/slide_in_top"
+            app:popEnterAnim="@anim/slide_out_top"
+            app:popExitAnim="@anim/slide_in_bottom"
+            app:popUpTo="@id/workspaceFragment"
+            app:popUpToInclusive="true">
+            <argument
+                android:name="name"
+                app:argType="string"
+                app:nullable="true" />
+            <argument
+                android:name="path"
+                app:argType="string"
+                app:nullable="true" />
+            <argument
+                android:name="image_name"
+                app:argType="string"
+                app:nullable="true" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/groupFragment"
+        android:name="com.example.idocs.GroupFragment"
+        android:label="Groups"
+        tools:layout="@layout/fragment_group">
+        <action
+            android:id="@+id/action_groupFragment_to_workspaceFragment"
+            app:destination="@id/workspaceFragment"
+            app:enterAnim="@anim/slide_out_left"
+            app:exitAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_out_right"
+            app:popExitAnim="@anim/slide_in_left"
+            app:popUpTo="@id/workspaceFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_groupFragment_to_createNewGroupFragment"
+            app:destination="@id/createNewGroupFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/slide_out_top"
+            app:popEnterAnim="@anim/slide_in_top"
+            app:popExitAnim="@anim/slide_out_bottom"
+            app:popUpToInclusive="false">
+            <argument
+                android:name="WORKSPACE_ID"
+                app:argType="integer" />
+        </action>
+        <action
+            android:id="@+id/action_groupFragment_to_documentFragment"
+            app:destination="@id/documentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right">
+            <argument
+                android:name="GROUP_ID"
+                app:argType="integer" />
+            <argument
+                android:name="WORKSPACE_ID"
+                app:argType="integer" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/createNewGroupFragment"
+        android:name="com.example.idocs.CreateNewGroupFragment"
+        android:label="Add Group"
+        tools:layout="@layout/fragment_create_new_group">
+        <action
+            android:id="@+id/action_createNewGroupFragment_to_groupFragment"
+            app:destination="@id/groupFragment"
+            app:enterAnim="@anim/slide_out_bottom"
+            app:exitAnim="@anim/slide_in_top"
+            app:popEnterAnim="@anim/slide_out_top"
+            app:popExitAnim="@anim/slide_in_bottom"
+            app:popUpTo="@id/groupFragment"
+            app:popUpToInclusive="true">
+            <argument
+                android:name="DOCUMENTS_NAME"
+                app:argType="string[]"
+                app:nullable="true" />
+            <argument
+                android:name="DOCUMENTS_URI"
+                app:argType="string[]"
+                app:nullable="true" />
+            <argument
+                android:name="GROUP_NAME"
+                app:argType="string"
+                app:nullable="true" />
+            <argument
+                android:name="workspace_id"
+                app:argType="integer" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/documentFragment"
+        android:name="com.example.idocs.DocumentFragment"
+        android:label="Documents"
+        tools:layout="@layout/fragment_document">
+        <action
+            android:id="@+id/action_documentFragment_to_groupFragment"
+            app:destination="@id/groupFragment"
+            app:enterAnim="@anim/slide_out_left"
+            app:exitAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_out_right"
+            app:popExitAnim="@anim/slide_in_left"
+            app:popUpTo="@id/groupFragment"
+            app:popUpToInclusive="true">
+            <argument
+                android:name="workspace_id"
+                app:argType="integer" />
+        </action>
+        <action
+            android:id="@+id/action_documentFragment_to_workspaceFragment"
+            app:destination="@id/workspaceFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.idocs.MapsFragment"
+        android:label="Shop"
+        tools:layout="@layout/fragment_maps" />
+    <fragment
+        android:id="@+id/stationaryShopsFragment"
+        android:name="com.example.idocs.StationaryShopsFragment"
+        android:label="Stationary Shops"
+        tools:layout="@layout/fragment_stationary_shops">
+        <action
+            android:id="@+id/action_stationaryShopsFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment">
+            <argument
+                android:name="x_coordinate"
+                app:argType="float" />
+            <argument
+            android:name="y_coordinate"
+            app:argType="float" />
+        </action>
+    </fragment>
+</navigation>

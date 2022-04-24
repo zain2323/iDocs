@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".StationaryShopsFragment">
+<!--    FIRST SHOP-->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_shop_name_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="1- Karachi Stationers "
+                android:textAppearance="?attr/textAppearanceHeadline6" />
+
+            <TextView
+                android:id="@+id/tv_shop_address_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_shop_name_1"
+                android:padding="11dp"
+                android:text="Shop no 15, Urdu Bazar, M.A. Jinnah road" />
+
+            <ImageButton
+                android:id="@+id/bt_show_on_map_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_shop_name_1"
+                android:layout_alignParentEnd="true"
+                android:background="@color/white"
+                android:padding="8dp"
+                android:src="@drawable/ic_location"
+                android:text="Show map" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+<!--    SECOND SHOP-->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_shop_name_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="2- Lucky Tech "
+                android:textAppearance="?attr/textAppearanceHeadline6" />
+
+            <TextView
+                android:id="@+id/tv_shop_address_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_shop_name_2"
+                android:padding="11dp"
+                android:text="Near PIDC, Karachi Cantt" />
+
+            <ImageButton
+                android:id="@+id/bt_show_on_map_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_shop_name_2"
+                android:layout_alignParentEnd="true"
+                android:background="@color/white"
+                android:padding="8dp"
+                android:src="@drawable/ic_location"
+                android:text="Show map" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!--    THIRD SHOP-->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_shop_name_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="3- Defence Stationers"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
+
+            <TextView
+                android:id="@+id/tv_shop_address_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_shop_name_3"
+                android:padding="11dp"
+                android:text="Ruby Centre, Talpur Road, P.C" />
+
+            <ImageButton
+                android:id="@+id/bt_show_on_map_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_shop_name_3"
+                android:layout_alignParentEnd="true"
+                android:background="@color/white"
+                android:padding="8dp"
+                android:src="@drawable/ic_location"
+                android:text="Show map" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <!--    FOURTH SHOP-->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_shop_name_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="4- Barico"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
+
+            <TextView
+                android:id="@+id/tv_shop_address_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_shop_name_4"
+                android:padding="11dp"
+                android:text="Suite no. 303 Mehran Heights, Block-8 Clifton" />
+
+            <ImageButton
+                android:id="@+id/bt_show_on_map_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_shop_name_4"
+                android:layout_alignParentEnd="true"
+                android:background="@color/white"
+                android:padding="8dp"
+                android:src="@drawable/ic_location"
+                android:text="Show map" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <!--    FIFTH SHOP-->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_shop_name_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="5- Fine Variety Stationers"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
+
+            <TextView
+                android:id="@+id/tv_shop_address_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_shop_name_5"
+                android:padding="11dp"
+                android:text="Shop No.50, Urdu Bazar, M.A. Jinnah Road " />
+
+            <ImageButton
+                android:id="@+id/bt_show_on_map_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_shop_name_5"
+                android:layout_alignParentEnd="true"
+                android:background="@color/white"
+                android:padding="8dp"
+                android:src="@drawable/ic_location"
+                android:text="Show map" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>
