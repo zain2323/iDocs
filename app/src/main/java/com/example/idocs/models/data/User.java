@@ -1,4 +1,4 @@
-package com.example.idocs;
+package com.example.idocs.models.data;
 
 import java.util.Date;
 

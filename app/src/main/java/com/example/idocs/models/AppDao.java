@@ -1,17 +1,22 @@
-package com.example.idocs;
+package com.example.idocs.models;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
+import com.example.idocs.models.data.Document;
+import com.example.idocs.models.data.Group;
+import com.example.idocs.models.data.GroupWithDocuments;
+import com.example.idocs.models.data.Workspace;
+import com.example.idocs.models.data.WorkspaceWithGroup;
+
 import java.util.List;
 
-@Dao
-public interface WorkspaceDao
+@androidx.room.Dao
+public interface AppDao
 {
     @Insert
     void insertWorkspace(Workspace workspace);

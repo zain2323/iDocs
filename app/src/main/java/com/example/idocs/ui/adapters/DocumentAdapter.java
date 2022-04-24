@@ -1,4 +1,4 @@
-package com.example.idocs;
+package com.example.idocs.ui.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.idocs.R;
 
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.ViewHo
         }
     }
 
-    interface OnItemClickListener
+    public interface OnItemClickListener
     {
         void onItemClick(int position);
     }

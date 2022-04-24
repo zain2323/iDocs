@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="auto"
-    tools:context=".GroupFragment">
+    tools:context=".ui.views.GroupFragment">
 
     <TextView
         android:id="@+id/tv_group"

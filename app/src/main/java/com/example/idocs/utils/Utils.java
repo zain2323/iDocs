@@ -1,4 +1,4 @@
-package com.example.idocs;
+package com.example.idocs.utils;
 
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -9,6 +9,8 @@ import android.os.ParcelFileDescriptor;
 import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
+
+import com.example.idocs.BuildConfig;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

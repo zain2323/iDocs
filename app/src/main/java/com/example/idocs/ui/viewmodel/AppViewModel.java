@@ -1,4 +1,4 @@
-package com.example.idocs;
+package com.example.idocs.ui.viewmodel;
 
 import android.app.Application;
 
@@ -6,39 +6,46 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.idocs.models.data.Document;
+import com.example.idocs.models.data.Group;
+import com.example.idocs.models.data.GroupWithDocuments;
+import com.example.idocs.models.data.Workspace;
+import com.example.idocs.models.AppRepository;
+import com.example.idocs.models.data.WorkspaceWithGroup;
+
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class WorkspaceViewModel extends AndroidViewModel
+public class AppViewModel extends AndroidViewModel
 {
-    private WorkspaceRepository workspaceRepository;
+    private AppRepository appRepository;
     private LiveData<List<Workspace>> allWorkspaces;
 
-    public WorkspaceViewModel(@NonNull Application application)
+    public AppViewModel(@NonNull Application application)
     {
         super(application);
-        workspaceRepository = new WorkspaceRepository(application);
-        allWorkspaces = workspaceRepository.getAllWorkspaces();
+        appRepository = new AppRepository(application);
+        allWorkspaces = appRepository.getAllWorkspaces();
     }
 
     public void insertWorkspace(Workspace workspace)
     {
-        workspaceRepository.insertWorkspace(workspace);
+        appRepository.insertWorkspace(workspace);
     }
 
     public void deleteWorkspace(Workspace workspace)
     {
-        workspaceRepository.deleteWorkspace(workspace);
+        appRepository.deleteWorkspace(workspace);
     }
 
     public void updateWorkspace(Workspace workspace)
     {
-        workspaceRepository.updateWorkspace(workspace);
+        appRepository.updateWorkspace(workspace);
     }
 
     public void deleteAllWorkspaces()
     {
-        workspaceRepository.deleteAllWorkspaces();
+        appRepository.deleteAllWorkspaces();
     }
 
     public LiveData<List<Workspace>> getAllWorkspaces()
@@ -47,43 +54,43 @@ public class WorkspaceViewModel extends AndroidViewModel
     }
 
     public long insertGroup(Group group) throws ExecutionException, InterruptedException {
-        long id = workspaceRepository.insertGroup(group);
+        long id = appRepository.insertGroup(group);
         return id;
     }
 
     public void deleteGroup(Group group)
     {
-        workspaceRepository.deleteGroup(group);
+        appRepository.deleteGroup(group);
     }
 
     public void updateGroup(Group group)
     {
-        workspaceRepository.updateGroup(group);
+        appRepository.updateGroup(group);
     }
 
     public LiveData<List<WorkspaceWithGroup>> getWorkspaceWithGroups(int workspaceId)
     {
-        return workspaceRepository.getWorkspaceWithGroups(workspaceId);
+        return appRepository.getWorkspaceWithGroups(workspaceId);
     }
 
     public void insertDocument(Document document)
     {
-        workspaceRepository.insertDocument(document);
+        appRepository.insertDocument(document);
     }
 
     public void deleteDocument(Document document)
     {
-        workspaceRepository.deleteDocument(document);
+        appRepository.deleteDocument(document);
     }
 
     public void updateDocument(Document document)
     {
-        workspaceRepository.updateDocument(document);
+        appRepository.updateDocument(document);
     }
 
     public LiveData<List<GroupWithDocuments>> getGroupWithDocuments(int groupId)
     {
-        return workspaceRepository.getGroupWithDocuments(groupId);
+        return appRepository.getGroupWithDocuments(groupId);
     }
 
 }

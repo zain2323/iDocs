@@ -1,43 +1,50 @@
-package com.example.idocs;
+package com.example.idocs.models;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.idocs.models.data.Document;
+import com.example.idocs.models.data.Group;
+import com.example.idocs.models.data.GroupWithDocuments;
+import com.example.idocs.models.data.Workspace;
+import com.example.idocs.models.data.WorkspaceDatabase;
+import com.example.idocs.models.data.WorkspaceWithGroup;
+
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class WorkspaceRepository
+public class AppRepository
 {
-    private WorkspaceDao workspaceDao;
+    private AppDao appDao;
     private LiveData<List<Workspace>> allWorkspaces;
 
-    public WorkspaceRepository(Application application)
+    public AppRepository(Application application)
     {
         WorkspaceDatabase workspaceDatabase = WorkspaceDatabase.getInstance(application);
-        workspaceDao = workspaceDatabase.workspaceDao();
-        allWorkspaces = workspaceDao.getAllWorkspaces();
+        appDao = workspaceDatabase.workspaceDao();
+        allWorkspaces = appDao.getAllWorkspaces();
     }
 
     public void insertWorkspace(Workspace workspace)
     {
-        new InsertWorkspaceAsyncTask(workspaceDao).execute(workspace);
+        new InsertWorkspaceAsyncTask(appDao).execute(workspace);
     }
 
     public void updateWorkspace(Workspace workspace)
     {
-        new UpdateWorkspaceAsyncTask(workspaceDao).execute(workspace);
+        new UpdateWorkspaceAsyncTask(appDao).execute(workspace);
     }
 
     public void deleteWorkspace(Workspace workspace)
     {
-        new DeleteWorkspaceAsyncTask(workspaceDao).execute(workspace);
+        new DeleteWorkspaceAsyncTask(appDao).execute(workspace);
     }
 
     public void deleteAllWorkspaces()
     {
-        new DeleteAllWorkspacesAsyncTask(workspaceDao).execute();
+        new DeleteAllWorkspacesAsyncTask(appDao).execute();
     }
 
 //    Groups Methods
@@ -47,73 +54,73 @@ public class WorkspaceRepository
     }
 
     public long insertGroup(Group group) throws ExecutionException, InterruptedException {
-        long id = new InsertGroupAsyncTask(workspaceDao).execute(group).get();
+        long id = new InsertGroupAsyncTask(appDao).execute(group).get();
         return id;
     }
 
     public void updateGroup(Group group)
     {
-        new UpdateGroupAsyncTask(workspaceDao).execute(group);
+        new UpdateGroupAsyncTask(appDao).execute(group);
     }
 
     public void deleteGroup(Group group)
     {
-        new DeleteGroupAsyncTask(workspaceDao).execute(group);
+        new DeleteGroupAsyncTask(appDao).execute(group);
     }
 
     public LiveData<List<WorkspaceWithGroup>> getWorkspaceWithGroups(int workspaceId)
     {
-        return workspaceDao.getWorkspaceWithGroups(workspaceId);
+        return appDao.getWorkspaceWithGroups(workspaceId);
     }
 
 //    Documents Methods
 public void insertDocument(Document document)
 {
-    new InsertDocumentAsyncTask(workspaceDao).execute(document);
+    new InsertDocumentAsyncTask(appDao).execute(document);
 }
 
     public void updateDocument(Document document)
     {
-        new UpdateDocumentAsyncTask(workspaceDao).execute(document);
+        new UpdateDocumentAsyncTask(appDao).execute(document);
     }
 
     public void deleteDocument(Document document)
     {
-        new DeleteDocumentAsyncTask(workspaceDao).execute(document);
+        new DeleteDocumentAsyncTask(appDao).execute(document);
     }
 
     public LiveData<List<GroupWithDocuments>> getGroupWithDocuments(int groupId)
     {
-        return workspaceDao.getGroupWithDocuments(groupId);
+        return appDao.getGroupWithDocuments(groupId);
     }
 
 //    Workspace Async Tasks
     private static class InsertWorkspaceAsyncTask extends AsyncTask<Workspace, Void, Void>
     {
-        private WorkspaceDao workspaceDao;
+        private AppDao appDao;
 
-        public InsertWorkspaceAsyncTask(WorkspaceDao workspaceDao) {
-            this.workspaceDao = workspaceDao;
+        public InsertWorkspaceAsyncTask(AppDao appDao) {
+            this.appDao = appDao;
         }
 
         @Override
         protected Void doInBackground(Workspace... workspaces) {
-            workspaceDao.insertWorkspace(workspaces[0]);
+            appDao.insertWorkspace(workspaces[0]);
             return null;
         }
     }
 
     private static class UpdateWorkspaceAsyncTask extends AsyncTask<Workspace, Void, Void>
     {
-        private WorkspaceDao workspaceDao;
+        private AppDao appDao;
 
-        public UpdateWorkspaceAsyncTask(WorkspaceDao workspaceDao) {
-            this.workspaceDao = workspaceDao;
+        public UpdateWorkspaceAsyncTask(AppDao appDao) {
+            this.appDao = appDao;
         }
 
         @Override
         protected Void doInBackground(Workspace... workspaces) {
-            workspaceDao.updateWorkspace(workspaces[0]);
+            appDao.updateWorkspace(workspaces[0]);
             return null;
         }
     }
@@ -121,15 +128,15 @@ public void insertDocument(Document document)
 
     private static class DeleteWorkspaceAsyncTask extends AsyncTask<Workspace, Void, Void>
     {
-        private WorkspaceDao workspaceDao;
+        private AppDao appDao;
 
-        public DeleteWorkspaceAsyncTask(WorkspaceDao workspaceDao) {
-            this.workspaceDao = workspaceDao;
+        public DeleteWorkspaceAsyncTask(AppDao appDao) {
+            this.appDao = appDao;
         }
 
         @Override
         protected Void doInBackground(Workspace... workspaces) {
-            workspaceDao.deleteWorkspace(workspaces[0]);
+            appDao.deleteWorkspace(workspaces[0]);
             return null;
         }
     }
@@ -137,15 +144,15 @@ public void insertDocument(Document document)
 
     private static class DeleteAllWorkspacesAsyncTask extends AsyncTask<Void, Void, Void>
     {
-        private WorkspaceDao workspaceDao;
+        private AppDao appDao;
 
-        public DeleteAllWorkspacesAsyncTask(WorkspaceDao workspaceDao) {
-            this.workspaceDao = workspaceDao;
+        public DeleteAllWorkspacesAsyncTask(AppDao appDao) {
+            this.appDao = appDao;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            workspaceDao.deleteAllWorkspaces();
+            appDao.deleteAllWorkspaces();
             return null;
         }
     }
@@ -154,45 +161,45 @@ public void insertDocument(Document document)
 
     private static class InsertGroupAsyncTask extends AsyncTask<Group, Void, Long>
     {
-        private WorkspaceDao workspaceDao;
+        private AppDao appDao;
 
-        public InsertGroupAsyncTask(WorkspaceDao workspaceDao) {
-            this.workspaceDao = workspaceDao;
+        public InsertGroupAsyncTask(AppDao appDao) {
+            this.appDao = appDao;
         }
 
         @Override
         protected Long doInBackground(Group... groups) {
-            long id = workspaceDao.insertGroup(groups[0]);
+            long id = appDao.insertGroup(groups[0]);
             return id;
         }
     }
 
     private static class UpdateGroupAsyncTask extends AsyncTask<Group, Void, Void>
     {
-        private WorkspaceDao workspaceDao;
+        private AppDao appDao;
 
-        public UpdateGroupAsyncTask(WorkspaceDao workspaceDao) {
-            this.workspaceDao = workspaceDao;
+        public UpdateGroupAsyncTask(AppDao appDao) {
+            this.appDao = appDao;
         }
 
         @Override
         protected Void doInBackground(Group... groups) {
-            workspaceDao.updateGroup(groups[0]);
+            appDao.updateGroup(groups[0]);
             return null;
         }
     }
 
     private static class DeleteGroupAsyncTask extends AsyncTask<Group, Void, Void>
     {
-        private WorkspaceDao workspaceDao;
+        private AppDao appDao;
 
-        public DeleteGroupAsyncTask(WorkspaceDao workspaceDao) {
-            this.workspaceDao = workspaceDao;
+        public DeleteGroupAsyncTask(AppDao appDao) {
+            this.appDao = appDao;
         }
 
         @Override
         protected Void doInBackground(Group... groups) {
-            workspaceDao.deleteGroup(groups[0]);
+            appDao.deleteGroup(groups[0]);
             return null;
         }
     }
@@ -201,45 +208,45 @@ public void insertDocument(Document document)
 
     private static class InsertDocumentAsyncTask extends AsyncTask<Document, Void, Void>
     {
-        private WorkspaceDao workspaceDao;
+        private AppDao appDao;
 
-        public InsertDocumentAsyncTask(WorkspaceDao workspaceDao) {
-            this.workspaceDao = workspaceDao;
+        public InsertDocumentAsyncTask(AppDao appDao) {
+            this.appDao = appDao;
         }
 
         @Override
         protected Void doInBackground(Document... documents) {
-            workspaceDao.insertDocument(documents[0]);
+            appDao.insertDocument(documents[0]);
             return null;
         }
     }
 
     private static class UpdateDocumentAsyncTask extends AsyncTask<Document, Void, Void>
     {
-        private WorkspaceDao workspaceDao;
+        private AppDao appDao;
 
-        public UpdateDocumentAsyncTask(WorkspaceDao workspaceDao) {
-            this.workspaceDao = workspaceDao;
+        public UpdateDocumentAsyncTask(AppDao appDao) {
+            this.appDao = appDao;
         }
 
         @Override
         protected Void doInBackground(Document... documents) {
-            workspaceDao.updateDocument(documents[0]);
+            appDao.updateDocument(documents[0]);
             return null;
         }
     }
 
     private static class DeleteDocumentAsyncTask extends AsyncTask<Document, Void, Void>
     {
-        private WorkspaceDao workspaceDao;
+        private AppDao appDao;
 
-        public DeleteDocumentAsyncTask(WorkspaceDao workspaceDao) {
-            this.workspaceDao = workspaceDao;
+        public DeleteDocumentAsyncTask(AppDao appDao) {
+            this.appDao = appDao;
         }
 
         @Override
         protected Void doInBackground(Document... documents) {
-            workspaceDao.deleteDocument(documents[0]);
+            appDao.deleteDocument(documents[0]);
             return null;
         }
     }

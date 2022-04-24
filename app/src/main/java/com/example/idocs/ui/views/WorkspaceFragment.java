@@ -1,4 +1,4 @@
-package com.example.idocs;
+package com.example.idocs.ui.views;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -22,11 +22,16 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.idocs.R;
+import com.example.idocs.models.data.Workspace;
+import com.example.idocs.ui.adapters.WorkspaceAdapter;
+import com.example.idocs.ui.viewmodel.AppViewModel;
+
 import java.util.List;
 
 public class WorkspaceFragment extends Fragment implements WorkspaceAdapter.OnItemClickListener {
     private RecyclerView workspaceRecyclerView;
-    private WorkspaceViewModel workspaceViewModel;
+    private AppViewModel appViewModel;
     private TextView newWorkspace;
     private View rootView;
     @Override
@@ -54,8 +59,8 @@ public class WorkspaceFragment extends Fragment implements WorkspaceAdapter.OnIt
         super.onViewCreated(root, savedInstanceState);
 
         WorkspaceAdapter workspaceAdapter = new WorkspaceAdapter(this, getContext());
-        workspaceViewModel = new ViewModelProvider(this).get(WorkspaceViewModel.class);
-        workspaceViewModel.getAllWorkspaces().observe((LifecycleOwner) getContext(), new Observer<List<Workspace>>() {
+        appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
+        appViewModel.getAllWorkspaces().observe((LifecycleOwner) getContext(), new Observer<List<Workspace>>() {
             @Override
             public void onChanged(List<Workspace> workspaces) {
                 workspaceAdapter.submitList(workspaces);
@@ -99,8 +104,8 @@ public class WorkspaceFragment extends Fragment implements WorkspaceAdapter.OnIt
         {
             workspace = new Workspace(name, R.drawable.ic_workspace);
         }
-        Log.i("WORKSPACE", String.valueOf(workspaceViewModel));
-        workspaceViewModel.insertWorkspace(workspace);
+        Log.i("WORKSPACE", String.valueOf(appViewModel));
+        appViewModel.insertWorkspace(workspace);
         Toast.makeText(getContext(), "New workspace added", Toast.LENGTH_SHORT).show();
     }
 

@@ -1,4 +1,4 @@
-package com.example.idocs;
+package com.example.idocs.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.idocs.R;
+import com.example.idocs.models.data.Group;
 
 public class GroupAdapter extends ListAdapter<Group, GroupAdapter.GroupHolder> {
     private OnItemClickListener listener;
@@ -80,7 +83,7 @@ public class GroupAdapter extends ListAdapter<Group, GroupAdapter.GroupHolder> {
         }
     }
 
-    interface OnItemClickListener
+    public interface OnItemClickListener
     {
         void onItemClick(Group group);
     }

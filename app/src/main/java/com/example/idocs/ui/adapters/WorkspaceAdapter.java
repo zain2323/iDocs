@@ -1,4 +1,4 @@
-package com.example.idocs;
+package com.example.idocs.ui.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,6 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.idocs.R;
+import com.example.idocs.models.data.Workspace;
+import com.example.idocs.utils.Utils;
 
 public class WorkspaceAdapter extends ListAdapter<Workspace, WorkspaceAdapter.WorkspaceHolder> {
     private OnItemClickListener listener;
@@ -90,7 +94,7 @@ public class WorkspaceAdapter extends ListAdapter<Workspace, WorkspaceAdapter.Wo
         }
     }
 
-    interface OnItemClickListener
+    public interface OnItemClickListener
     {
         void onItemClick(Workspace workspace);
     }

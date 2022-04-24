@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/workspaceFragment"
-        android:name="com.example.idocs.WorkspaceFragment"
+        android:name="com.example.idocs.ui.views.WorkspaceFragment"
         android:label="Workspaces"
         tools:layout="@layout/fragment_workspace">
         <action
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/createNewWorkspaceFragment"
-        android:name="com.example.idocs.CreateNewWorkspaceFragment"
+        android:name="com.example.idocs.ui.views.CreateNewWorkspaceFragment"
         android:label="Add  Workspace"
         tools:layout="@layout/fragment_create_new_workspace">
         <action
@@ -69,7 +69,7 @@
     </fragment>
     <fragment
         android:id="@+id/groupFragment"
-        android:name="com.example.idocs.GroupFragment"
+        android:name="com.example.idocs.ui.views.GroupFragment"
         android:label="Groups"
         tools:layout="@layout/fragment_group">
         <action
@@ -110,7 +110,7 @@
     </fragment>
     <fragment
         android:id="@+id/createNewGroupFragment"
-        android:name="com.example.idocs.CreateNewGroupFragment"
+        android:name="com.example.idocs.ui.views.CreateNewGroupFragment"
         android:label="Add Group"
         tools:layout="@layout/fragment_create_new_group">
         <action
@@ -141,7 +141,7 @@
     </fragment>
     <fragment
         android:id="@+id/documentFragment"
-        android:name="com.example.idocs.DocumentFragment"
+        android:name="com.example.idocs.ui.views.DocumentFragment"
         android:label="Documents"
         tools:layout="@layout/fragment_document">
         <action
@@ -167,12 +167,12 @@
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="com.example.idocs.MapsFragment"
+        android:name="com.example.idocs.ui.views.MapsFragment"
         android:label="Shop"
         tools:layout="@layout/fragment_maps" />
     <fragment
         android:id="@+id/stationaryShopsFragment"
-        android:name="com.example.idocs.StationaryShopsFragment"
+        android:name="com.example.idocs.ui.views.StationaryShopsFragment"
         android:label="Stationary Shops"
         tools:layout="@layout/fragment_stationary_shops">
         <action

@@ -1,4 +1,4 @@
-package com.example.idocs;
+package com.example.idocs.models.data;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -9,10 +9,13 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.idocs.R;
+import com.example.idocs.models.AppDao;
+
 @Database(entities = {Workspace.class, Group.class, Document.class}, version = 1)
 public abstract class WorkspaceDatabase extends RoomDatabase{
     private static WorkspaceDatabase instance;
-    public abstract WorkspaceDao workspaceDao();
+    public abstract AppDao workspaceDao();
 
     public static synchronized WorkspaceDatabase getInstance(Context context) {
         if (instance == null) {
@@ -34,26 +37,26 @@ public abstract class WorkspaceDatabase extends RoomDatabase{
     };
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
-        private WorkspaceDao workspaceDao;
+        private AppDao appDao;
 
         private PopulateDbAsyncTask(WorkspaceDatabase db) {
-            workspaceDao = db.workspaceDao();
+            appDao = db.workspaceDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            workspaceDao.insertWorkspace(new Workspace("Second Semester", R.drawable.ic_workspace));
-            workspaceDao.insertWorkspace(new Workspace("Third Semester", R.drawable.ic_workspace));
-            workspaceDao.insertWorkspace(new Workspace("First Semester", R.drawable.ic_workspace));
+            appDao.insertWorkspace(new Workspace("Second Semester", R.drawable.ic_workspace));
+            appDao.insertWorkspace(new Workspace("Third Semester", R.drawable.ic_workspace));
+            appDao.insertWorkspace(new Workspace("First Semester", R.drawable.ic_workspace));
 
-            workspaceDao.insertGroup(new Group("Bel", 1));
-            workspaceDao.insertGroup(new Group("OOP", 1));
-            workspaceDao.insertGroup(new Group("Dsa", 2));
+            appDao.insertGroup(new Group("Bel", 1));
+            appDao.insertGroup(new Group("OOP", 1));
+            appDao.insertGroup(new Group("Dsa", 2));
 
-            workspaceDao.insertDocument(new Document("Chapter1", "chapter1", 1));
-            workspaceDao.insertDocument(new Document("Chapter2", "chapter2", 1));
-            workspaceDao.insertDocument(new Document("Chapter3", "chapter3", 1));
-            workspaceDao.insertDocument(new Document("Chapter1", "chapter1", 2));
+            appDao.insertDocument(new Document("Chapter1", "chapter1", 1));
+            appDao.insertDocument(new Document("Chapter2", "chapter2", 1));
+            appDao.insertDocument(new Document("Chapter3", "chapter3", 1));
+            appDao.insertDocument(new Document("Chapter1", "chapter1", 2));
 //            workspaceDao.insertGroup(new Group("OOP", 1));
 //            workspaceDao.insertGroup(new Group("Dsa", 2));
             return null;

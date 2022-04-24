@@ -1,4 +1,4 @@
-package com.example.idocs;
+package com.example.idocs.ui.views;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.anggrayudi.storage.SimpleStorageHelper;
 import com.anggrayudi.storage.file.DocumentFileUtils;
+import com.example.idocs.R;
+import com.example.idocs.ui.adapters.DocumentAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;

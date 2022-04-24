@@ -8,7 +8,7 @@
     android:layout_marginTop="8dp"
     android:paddingStart="4dp"
     android:paddingEnd="4dp"
-    tools:context=".DocumentFragment"
+    tools:context=".ui.views.DocumentFragment"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <androidx.recyclerview.widget.RecyclerView

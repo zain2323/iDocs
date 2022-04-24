@@ -1,4 +1,4 @@
-package com.example.idocs;
+package com.example.idocs.ui.views;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,6 +23,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.example.idocs.R;
+import com.example.idocs.utils.Utils;
 import com.sangcomz.fishbun.FishBun;
 import com.sangcomz.fishbun.adapter.image.impl.GlideAdapter;
 

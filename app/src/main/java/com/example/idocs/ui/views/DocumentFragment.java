@@ -1,4 +1,4 @@
-package com.example.idocs;
+package com.example.idocs.ui.views;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -26,6 +26,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.anggrayudi.storage.SimpleStorageHelper;
 import com.anggrayudi.storage.file.DocumentFileUtils;
+import com.example.idocs.R;
+import com.example.idocs.models.data.Document;
+import com.example.idocs.models.data.GroupWithDocuments;
+import com.example.idocs.utils.Utils;
+import com.example.idocs.ui.adapters.GroupDocumentsAdapter;
+import com.example.idocs.ui.viewmodel.AppViewModel;
 
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
@@ -35,7 +41,7 @@ import java.util.List;
 public class DocumentFragment extends Fragment implements GroupDocumentsAdapter.OnItemClickListener {
     private RecyclerView documentRecyclerView;
     SimpleStorageHelper simpleStorageHelper;
-    private WorkspaceViewModel workspaceViewModel;
+    private AppViewModel appViewModel;
     private View rootView;
     private int groupId;
     private int workspaceId;
@@ -69,8 +75,8 @@ public class DocumentFragment extends Fragment implements GroupDocumentsAdapter.
         this.groupId = getArguments().getInt("GROUP_ID");
         this.workspaceId = getArguments().getInt("WORKSPACE_ID");
         GroupDocumentsAdapter documentAdapter = new GroupDocumentsAdapter(this, getContext());
-        workspaceViewModel = new ViewModelProvider(this).get(WorkspaceViewModel.class);
-        workspaceViewModel.getGroupWithDocuments(groupId).observe((LifecycleOwner) getContext(), new Observer<List<GroupWithDocuments>>() {
+        appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
+        appViewModel.getGroupWithDocuments(groupId).observe((LifecycleOwner) getContext(), new Observer<List<GroupWithDocuments>>() {
             @Override
             public void onChanged(List<GroupWithDocuments> groupWithDocuments) {
                 documentAdapter.submitList(groupWithDocuments.get(0).getDocuments());
@@ -115,7 +121,7 @@ public class DocumentFragment extends Fragment implements GroupDocumentsAdapter.
                 try {
                     Uri savedUri = utils.savePDFToInternalStorageV2(getPdfBytes(files.get(0).getUri()), name, "docDir");
                     Document document = new Document(name, savedUri.toString(), this.groupId);
-                    workspaceViewModel.insertDocument(document);
+                    appViewModel.insertDocument(document);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

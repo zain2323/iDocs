@@ -1,4 +1,4 @@
-package com.example.idocs;
+package com.example.idocs.ui.views;
 
 import android.graphics.PointF;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+
+import com.example.idocs.R;
 
 public class StationaryShopsFragment extends Fragment {
     private ImageButton imgBtn_1;

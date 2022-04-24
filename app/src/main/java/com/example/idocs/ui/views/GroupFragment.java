@@ -1,4 +1,4 @@
-package com.example.idocs;
+package com.example.idocs.ui.views;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +18,13 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.idocs.R;
+import com.example.idocs.models.data.Document;
+import com.example.idocs.models.data.Group;
+import com.example.idocs.models.data.WorkspaceWithGroup;
+import com.example.idocs.utils.Utils;
+import com.example.idocs.ui.adapters.GroupAdapter;
+import com.example.idocs.ui.viewmodel.AppViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
@@ -26,7 +33,7 @@ import java.util.concurrent.ExecutionException;
 
 public class GroupFragment extends Fragment implements GroupAdapter.OnItemClickListener {
     private RecyclerView groupRecyclerView;
-    private WorkspaceViewModel workspaceViewModel;
+    private AppViewModel appViewModel;
     private View rootView;
     private FloatingActionButton btnAddGroup;
     private int workspaceId;
@@ -55,8 +62,8 @@ public class GroupFragment extends Fragment implements GroupAdapter.OnItemClickL
         }
 
         GroupAdapter groupAdapter = new GroupAdapter(this, getContext());
-        workspaceViewModel = new ViewModelProvider(this).get(WorkspaceViewModel.class);
-        workspaceViewModel.getWorkspaceWithGroups(workspaceId).observe((LifecycleOwner) getContext(), new Observer<List<WorkspaceWithGroup>>() {
+        appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
+        appViewModel.getWorkspaceWithGroups(workspaceId).observe((LifecycleOwner) getContext(), new Observer<List<WorkspaceWithGroup>>() {
             @Override
             public void onChanged(List<WorkspaceWithGroup> workspaceWithGroups) {
                 groupAdapter.submitList(workspaceWithGroups.get(0).getGroups());
@@ -102,7 +109,7 @@ public class GroupFragment extends Fragment implements GroupAdapter.OnItemClickL
 
     private long createNewGroup(String name) throws ExecutionException, InterruptedException {
         Group group = new Group(name, this.workspaceId);
-        long id = workspaceViewModel.insertGroup(group);
+        long id = appViewModel.insertGroup(group);
         return id;
     }
 
@@ -111,7 +118,7 @@ public class GroupFragment extends Fragment implements GroupAdapter.OnItemClickL
         for (int i = 0; i < documentsName.length; i++) {
             Uri uri = utils.savePDFToInternalStorageV2(utils.getPdfBytes(Uri.parse(documentsUri[i])), documentsName[0], "docDir");
             Document document = new Document(documentsName[i], uri.toString(), (int)groupId);
-            workspaceViewModel.insertDocument(document);
+            appViewModel.insertDocument(document);
             Log.i("Executed", "inserted");
         }
     }
