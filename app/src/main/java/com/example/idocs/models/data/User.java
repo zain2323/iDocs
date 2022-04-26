@@ -6,16 +6,14 @@ public class User
 {
     private int id;
     private String name;
-    private String phone;
     private String email;
     private Date registeredAt;
     private boolean isConfirmed;
 
-    public User(int id, String name, String phone, String email, Date registeredAt, boolean isConfirmed)
+    public User(int id, String name, String email, Date registeredAt, boolean isConfirmed)
     {
         this.id = id;
         this.name = name;
-        this.phone = phone;
         this.email = email;
         this.registeredAt = registeredAt;
         this.isConfirmed = isConfirmed;
@@ -35,14 +33,6 @@ public class User
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getEmail() {

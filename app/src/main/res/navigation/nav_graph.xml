@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     android:label="Add Workspace"
-    app:startDestination="@id/workspaceFragment">
+    app:startDestination="@id/landingPageFragment">
 
     <fragment
         android:id="@+id/workspaceFragment"
@@ -185,5 +185,56 @@
             android:name="y_coordinate"
             app:argType="float" />
         </action>
+    </fragment>
+    <fragment
+        android:id="@+id/landingPageFragment"
+        android:name="com.example.idocs.ui.views.LandingPageFragment"
+        android:label="Welcome"
+        tools:layout="@layout/fragment_landing_page">
+        <action
+            android:id="@+id/action_landingPageFragment_to_signupFragment"
+            app:destination="@id/signupFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_landingPageFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.idocs.ui.views.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_workspaceFragment"
+            app:destination="@id/workspaceFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/landingPageFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.example.idocs.ui.views.SignupFragment"
+        android:label="Signup"
+        tools:layout="@layout/fragment_signup">
+        <action
+            android:id="@+id/action_signupFragment_to_workspaceFragment"
+            app:destination="@id/workspaceFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/landingPageFragment"
+            app:popUpToInclusive="true"
+          />
     </fragment>
 </navigation>
