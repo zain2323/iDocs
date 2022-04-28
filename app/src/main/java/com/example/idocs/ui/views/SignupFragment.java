@@ -1,11 +1,13 @@
 package com.example.idocs.ui.views;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,8 +16,19 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.idocs.R;
-import com.example.idocs.models.data.User;
+import com.example.idocs.models.data.currentUser;
 import com.google.android.material.textfield.TextInputLayout;
+
+import org.jetbrains.annotations.NotNull;
+
+import io.appwrite.Client;
+import io.appwrite.exceptions.AppwriteException;
+import io.appwrite.models.User;
+import io.appwrite.services.Account;
+import kotlin.Result;
+import kotlin.coroutines.Continuation;
+import kotlin.coroutines.CoroutineContext;
+import kotlin.coroutines.EmptyCoroutineContext;
 
 public class SignupFragment extends Fragment {
 
@@ -48,11 +61,73 @@ public class SignupFragment extends Fragment {
         signup = view.findViewById(R.id.btn_signup);
         signupWithGoogle = view.findViewById(R.id.btn_signup_with_google);
 
+        Client client = new Client(getContext())
+                .setEndpoint("https://b79b-182-189-232-245.ap.ngrok.io/v1") // Your API Endpoint
+                .setProject("6265f0feac18893637c1"); // Your project ID
+
+        Account account = new Account(client);
+
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Redirecting to the workspaces screen", Toast.LENGTH_SHORT).show();
-                Toast.makeText(getContext(), signupName.getEditText().getText(), Toast.LENGTH_SHORT).show();
+                String name = signupName.getEditText().getText().toString();
+                String email = signupEmail.getEditText().getText().toString();
+                String password = signupPassword.getEditText().getText().toString();
+                boolean isValid = true;
+                if (TextUtils.isEmpty(name)) {
+                    signupName.getEditText().setError("Name can not be empty");
+                    isValid = false;
+                }
+                if (TextUtils.isEmpty(email)) {
+                    signupEmail.getEditText().setError("Email can not be empty");
+                    isValid = false;
+                }
+                if (TextUtils.isEmpty(password)) {
+                    signupPassword.getEditText().setError("Password can not be empty");
+                    isValid = false;
+                }
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches() && !TextUtils.isEmpty(email)) {
+                    signupEmail.getEditText().setError("Invalid email");
+                    isValid = false;
+                }
+                if (password.length() < 8 && !TextUtils.isEmpty(password)) {
+                    signupPassword.getEditText().setError("Password should be atleast 8 characters long");
+                    isValid = false;
+                }
+                if (!isValid) {return;}
+
+                try {
+                    account.create(
+                            "unique()",
+                            email,
+                            password,
+                            name,
+                            new Continuation<Object>() {
+                                @NotNull
+                                @Override
+                                public CoroutineContext getContext() {
+                                    return EmptyCoroutineContext.INSTANCE;
+                                }
+
+                                @Override
+                                public void resumeWith(@NotNull Object o) {
+                                    try {
+                                        if (o instanceof Result.Failure) {
+                                            Result.Failure failure = (Result.Failure) o;
+                                            throw failure.exception;
+                                        } else {
+                                            User user = (User) o;
+                                            Log.i("USER", user.toString());
+                                        }
+                                    } catch (Throwable th) {
+                                        Log.e("ERROR", th.toString());
+                                    }
+                                }
+                            }
+                    );
+                } catch (AppwriteException e) {
+                    e.printStackTrace();
+                }
                 Navigation.findNavController(view).navigate(SignupFragmentDirections.actionSignupFragmentToWorkspaceFragment());
             }
         });

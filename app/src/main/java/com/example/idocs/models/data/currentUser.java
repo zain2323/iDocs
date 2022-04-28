@@ -2,7 +2,7 @@ package com.example.idocs.models.data;
 
 import java.util.Date;
 
-public class User
+public class currentUser
 {
     private int id;
     private String name;
@@ -10,7 +10,7 @@ public class User
     private Date registeredAt;
     private boolean isConfirmed;
 
-    public User(int id, String name, String email, Date registeredAt, boolean isConfirmed)
+    public currentUser(int id, String name, String email, Date registeredAt, boolean isConfirmed)
     {
         this.id = id;
         this.name = name;
