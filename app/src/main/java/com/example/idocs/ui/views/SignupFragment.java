@@ -1,6 +1,8 @@
 package com.example.idocs.ui.views;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -17,6 +19,8 @@ import androidx.navigation.Navigation;
 
 import com.example.idocs.R;
 import com.example.idocs.models.data.currentUser;
+import com.example.idocs.ui.api.AppwriteClient;
+import com.example.idocs.ui.api.Authentication;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
@@ -61,10 +65,7 @@ public class SignupFragment extends Fragment {
         signup = view.findViewById(R.id.btn_signup);
         signupWithGoogle = view.findViewById(R.id.btn_signup_with_google);
 
-        Client client = new Client(getContext())
-                .setEndpoint("https://b79b-182-189-232-245.ap.ngrok.io/v1") // Your API Endpoint
-                .setProject("6265f0feac18893637c1"); // Your project ID
-
+        Client client = AppwriteClient.createClient(getContext());
         Account account = new Account(client);
 
         signup.setOnClickListener(new View.OnClickListener() {
@@ -96,39 +97,10 @@ public class SignupFragment extends Fragment {
                 }
                 if (!isValid) {return;}
 
-                try {
-                    account.create(
-                            "unique()",
-                            email,
-                            password,
-                            name,
-                            new Continuation<Object>() {
-                                @NotNull
-                                @Override
-                                public CoroutineContext getContext() {
-                                    return EmptyCoroutineContext.INSTANCE;
-                                }
+                Client client = AppwriteClient.createClient(getContext());
+                Authentication auth = new Authentication(client, getContext());
 
-                                @Override
-                                public void resumeWith(@NotNull Object o) {
-                                    try {
-                                        if (o instanceof Result.Failure) {
-                                            Result.Failure failure = (Result.Failure) o;
-                                            throw failure.exception;
-                                        } else {
-                                            User user = (User) o;
-                                            Log.i("USER", user.toString());
-                                        }
-                                    } catch (Throwable th) {
-                                        Log.e("ERROR", th.toString());
-                                    }
-                                }
-                            }
-                    );
-                } catch (AppwriteException e) {
-                    e.printStackTrace();
-                }
-                Navigation.findNavController(view).navigate(SignupFragmentDirections.actionSignupFragmentToWorkspaceFragment());
+                auth.signup(name, email, password);
             }
         });
 
