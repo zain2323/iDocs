@@ -1,5 +1,8 @@
 package com.example.idocs.ui.views;
 
+import static com.example.idocs.ui.views.LoginFragment.read_session_id;
+import static com.example.idocs.ui.views.LoginFragment.session_id;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +38,12 @@ public class LandingPageFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+//        Log.i("INFO", read_session_id());
+//        if (read_session_id() != null) {
+//            if (!read_session_id().equals("")) {
+//                Navigation.findNavController(view).navigate(LandingPageFragmentDirections.actionLandingPageFragmentToWorkspaceFragment());
+//            }
+//        }
         login = view.findViewById(R.id.btn_login_landing_page);
         signup = view.findViewById(R.id.btn_signup_landing_page);
 

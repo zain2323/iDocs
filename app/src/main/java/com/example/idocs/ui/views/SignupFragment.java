@@ -1,38 +1,28 @@
 package com.example.idocs.ui.views;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.example.idocs.R;
-import com.example.idocs.models.data.currentUser;
 import com.example.idocs.ui.api.AppwriteClient;
 import com.example.idocs.ui.api.Authentication;
+import com.example.idocs.ui.viewmodel.AppViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.jetbrains.annotations.NotNull;
-
 import io.appwrite.Client;
-import io.appwrite.exceptions.AppwriteException;
-import io.appwrite.models.User;
-import io.appwrite.services.Account;
-import kotlin.Result;
-import kotlin.coroutines.Continuation;
-import kotlin.coroutines.CoroutineContext;
-import kotlin.coroutines.EmptyCoroutineContext;
 
 public class SignupFragment extends Fragment {
 
@@ -41,6 +31,8 @@ public class SignupFragment extends Fragment {
     private TextInputLayout signupPassword;
     private Button signup;
     private Button signupWithGoogle;
+    private ProgressBar signupProgressBar;
+    private AppViewModel appViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,14 +51,16 @@ public class SignupFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
         signupName = view.findViewById(R.id.et_signup_name);
         signupEmail = view.findViewById(R.id.et_signup_email);
         signupPassword = view.findViewById(R.id.et_signup_password);
         signup = view.findViewById(R.id.btn_signup);
         signupWithGoogle = view.findViewById(R.id.btn_signup_with_google);
+        signupProgressBar = view.findViewById(R.id.signup_progress_bar);
 
         Client client = AppwriteClient.createClient(getContext());
-        Account account = new Account(client);
+        Authentication auth = new Authentication(client, getContext(), appViewModel);
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,12 +89,17 @@ public class SignupFragment extends Fragment {
                     signupPassword.getEditText().setError("Password should be atleast 8 characters long");
                     isValid = false;
                 }
-                if (!isValid) {return;}
+                if (!isValid) {
+                    return;
+                }
 
-                Client client = AppwriteClient.createClient(getContext());
-                Authentication auth = new Authentication(client, getContext());
-
-                auth.signup(name, email, password);
+                signupProgressBar.setVisibility(View.VISIBLE);
+                signupName.setEnabled(false);
+                signupEmail.setEnabled(false);
+                signupPassword.setEnabled(false);
+                signup.setEnabled(false);
+                signupWithGoogle.setEnabled(false);
+                auth.signup(name, email, password, signupProgressBar);
             }
         });
 

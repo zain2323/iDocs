@@ -1,21 +1,22 @@
 package com.example.idocs.models.data;
 
-import java.util.Date;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-public class currentUser
-{
+@Entity(tableName = "current_user")
+public class currentUser {
+    @PrimaryKey(autoGenerate = true)
     private int id;
+    private String session_id;
     private String name;
     private String email;
-    private Date registeredAt;
     private boolean isConfirmed;
 
-    public currentUser(int id, String name, String email, Date registeredAt, boolean isConfirmed)
-    {
+    public currentUser(int id, String session_id, String name, String email, boolean isConfirmed) {
         this.id = id;
+        this.session_id = session_id;
         this.name = name;
         this.email = email;
-        this.registeredAt = registeredAt;
         this.isConfirmed = isConfirmed;
     }
 
@@ -35,20 +36,20 @@ public class currentUser
         this.name = name;
     }
 
+    public String getSession_id() {
+        return session_id;
+    }
+
+    public void setSession_id(String session_id) {
+        this.session_id = session_id;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Date getRegisteredAt() {
-        return registeredAt;
-    }
-
-    public void setRegisteredAt(Date registeredAt) {
-        this.registeredAt = registeredAt;
     }
 
     public boolean isConfirmed() {

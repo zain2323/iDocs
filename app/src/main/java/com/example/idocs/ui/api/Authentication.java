@@ -4,10 +4,15 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.navigation.Navigation;
 
+import com.example.idocs.ui.viewmodel.AppViewModel;
+import com.example.idocs.ui.views.LoginFragment;
+import com.example.idocs.ui.views.LoginFragmentDirections;
 import com.example.idocs.ui.views.SignupFragment;
 import com.example.idocs.ui.views.SignupFragmentDirections;
 
@@ -26,13 +31,15 @@ import kotlin.coroutines.EmptyCoroutineContext;
 public class Authentication {
     private Account account;
     private Context context;
+    private AppViewModel appViewModel;
 
-    public Authentication(Client client, Context context) {
+    public Authentication(Client client, Context context, AppViewModel appViewModel) {
         this.account = new Account(client);
         this.context = context;
+        this.appViewModel = appViewModel;
     }
 
-    public void login(String email, String password) {
+    public void login(String email, String password, ProgressBar progressBar, View view) {
         try {
             account.createSession(
                     email,
@@ -54,12 +61,17 @@ public class Authentication {
                                     throw failure.exception;
                                 } else {
                                     Session user = (Session) o;
+                                    if (LoginFragment.session_id.equals("")) {
+                                        LoginFragment.session_id = user.getId();
+                                        LoginFragment.save_session_id(LoginFragment.session_id);
+                                    }
                                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                                         @Override
                                         public void run() {
+                                          progressBar.setVisibility(View.INVISIBLE);
                                             Toast.makeText(context,
                                                     "Login Successfully", Toast.LENGTH_LONG).show();
-//                                            Navigation.findNavController(view).navigate(LoginFragmentDirections.actionLoginFragmentToWorkspaceFragment());
+                                            Navigation.findNavController(view).navigate(LoginFragmentDirections.actionLoginFragmentToWorkspaceFragment());
                                         }
                                     });
                                 }
@@ -82,7 +94,7 @@ public class Authentication {
         }
     }
 
-    public void signup(String name, String email, String password) {
+    public void signup(String name, String email, String password, ProgressBar progressBar) {
         try {
             account.create(
                     "unique()",
@@ -109,6 +121,7 @@ public class Authentication {
                                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                                         @Override
                                         public void run() {
+                                            progressBar.setVisibility(View.INVISIBLE);
                                             Toast.makeText(context,
                                                     "Registered Successfully", Toast.LENGTH_LONG).show();
 //                                            Navigation.findNavController(view).navigate(SignupFragmentDirections.actionSignupFragmentToWorkspaceFragment());

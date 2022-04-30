@@ -12,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.idocs.R;
 import com.example.idocs.models.AppDao;
 
-@Database(entities = {Workspace.class, Group.class, Document.class}, version = 1)
+@Database(entities = {Workspace.class, Group.class, Document.class, currentUser.class}, version = 1)
 public abstract class WorkspaceDatabase extends RoomDatabase{
     private static WorkspaceDatabase instance;
     public abstract AppDao workspaceDao();

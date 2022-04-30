@@ -11,45 +11,49 @@ import com.example.idocs.models.data.GroupWithDocuments;
 import com.example.idocs.models.data.Workspace;
 import com.example.idocs.models.data.WorkspaceDatabase;
 import com.example.idocs.models.data.WorkspaceWithGroup;
+import com.example.idocs.models.data.currentUser;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class AppRepository
-{
+public class AppRepository {
     private AppDao appDao;
     private LiveData<List<Workspace>> allWorkspaces;
 
-    public AppRepository(Application application)
-    {
+    public AppRepository(Application application) {
         WorkspaceDatabase workspaceDatabase = WorkspaceDatabase.getInstance(application);
         appDao = workspaceDatabase.workspaceDao();
         allWorkspaces = appDao.getAllWorkspaces();
     }
 
-    public void insertWorkspace(Workspace workspace)
-    {
+    public void insertWorkspace(Workspace workspace) {
         new InsertWorkspaceAsyncTask(appDao).execute(workspace);
     }
 
-    public void updateWorkspace(Workspace workspace)
-    {
+    public void updateWorkspace(Workspace workspace) {
         new UpdateWorkspaceAsyncTask(appDao).execute(workspace);
     }
 
-    public void deleteWorkspace(Workspace workspace)
-    {
+    public void deleteWorkspace(Workspace workspace) {
         new DeleteWorkspaceAsyncTask(appDao).execute(workspace);
     }
 
-    public void deleteAllWorkspaces()
-    {
+    public void deleteAllWorkspaces() {
         new DeleteAllWorkspacesAsyncTask(appDao).execute();
     }
 
-//    Groups Methods
-    public LiveData<List<Workspace>> getAllWorkspaces()
-    {
+//    Current user methods
+
+    public void createUser(currentUser user) {
+        new CreateUserAsyncTask(appDao).execute(user);
+    }
+
+    public void updateUser(currentUser user) {
+        new UpdateUserAsyncTask(appDao).execute(user);
+    }
+
+    //    Groups Methods
+    public LiveData<List<Workspace>> getAllWorkspaces() {
         return allWorkspaces;
     }
 
@@ -58,45 +62,37 @@ public class AppRepository
         return id;
     }
 
-    public void updateGroup(Group group)
-    {
+    public void updateGroup(Group group) {
         new UpdateGroupAsyncTask(appDao).execute(group);
     }
 
-    public void deleteGroup(Group group)
-    {
+    public void deleteGroup(Group group) {
         new DeleteGroupAsyncTask(appDao).execute(group);
     }
 
-    public LiveData<List<WorkspaceWithGroup>> getWorkspaceWithGroups(int workspaceId)
-    {
+    public LiveData<List<WorkspaceWithGroup>> getWorkspaceWithGroups(int workspaceId) {
         return appDao.getWorkspaceWithGroups(workspaceId);
     }
 
-//    Documents Methods
-public void insertDocument(Document document)
-{
-    new InsertDocumentAsyncTask(appDao).execute(document);
-}
+    //    Documents Methods
+    public void insertDocument(Document document) {
+        new InsertDocumentAsyncTask(appDao).execute(document);
+    }
 
-    public void updateDocument(Document document)
-    {
+    public void updateDocument(Document document) {
         new UpdateDocumentAsyncTask(appDao).execute(document);
     }
 
-    public void deleteDocument(Document document)
-    {
+    public void deleteDocument(Document document) {
         new DeleteDocumentAsyncTask(appDao).execute(document);
     }
 
-    public LiveData<List<GroupWithDocuments>> getGroupWithDocuments(int groupId)
-    {
+    public LiveData<List<GroupWithDocuments>> getGroupWithDocuments(int groupId) {
         return appDao.getGroupWithDocuments(groupId);
     }
 
-//    Workspace Async Tasks
-    private static class InsertWorkspaceAsyncTask extends AsyncTask<Workspace, Void, Void>
-    {
+    //    Workspace Async Tasks
+    private static class InsertWorkspaceAsyncTask extends AsyncTask<Workspace, Void, Void> {
         private AppDao appDao;
 
         public InsertWorkspaceAsyncTask(AppDao appDao) {
@@ -110,8 +106,7 @@ public void insertDocument(Document document)
         }
     }
 
-    private static class UpdateWorkspaceAsyncTask extends AsyncTask<Workspace, Void, Void>
-    {
+    private static class UpdateWorkspaceAsyncTask extends AsyncTask<Workspace, Void, Void> {
         private AppDao appDao;
 
         public UpdateWorkspaceAsyncTask(AppDao appDao) {
@@ -126,8 +121,7 @@ public void insertDocument(Document document)
     }
 
 
-    private static class DeleteWorkspaceAsyncTask extends AsyncTask<Workspace, Void, Void>
-    {
+    private static class DeleteWorkspaceAsyncTask extends AsyncTask<Workspace, Void, Void> {
         private AppDao appDao;
 
         public DeleteWorkspaceAsyncTask(AppDao appDao) {
@@ -142,8 +136,7 @@ public void insertDocument(Document document)
     }
 
 
-    private static class DeleteAllWorkspacesAsyncTask extends AsyncTask<Void, Void, Void>
-    {
+    private static class DeleteAllWorkspacesAsyncTask extends AsyncTask<Void, Void, Void> {
         private AppDao appDao;
 
         public DeleteAllWorkspacesAsyncTask(AppDao appDao) {
@@ -157,10 +150,39 @@ public void insertDocument(Document document)
         }
     }
 
+//    Current user Async Tasks
+
+    private static class CreateUserAsyncTask extends AsyncTask<currentUser, Void, Void> {
+        private AppDao appDao;
+
+        public CreateUserAsyncTask(AppDao appDao) {
+            this.appDao = appDao;
+        }
+
+        @Override
+        protected Void doInBackground(currentUser... users) {
+            appDao.createUser(users[0]);
+            return null;
+        }
+    }
+
+    private static class UpdateUserAsyncTask extends AsyncTask<currentUser, Void, Void> {
+        private AppDao appDao;
+
+        public UpdateUserAsyncTask(AppDao appDao) {
+            this.appDao = appDao;
+        }
+
+        @Override
+        protected Void doInBackground(currentUser... users) {
+            appDao.updateUser(users[0]);
+            return null;
+        }
+    }
+
 //    Groups Async Tasks
 
-    private static class InsertGroupAsyncTask extends AsyncTask<Group, Void, Long>
-    {
+    private static class InsertGroupAsyncTask extends AsyncTask<Group, Void, Long> {
         private AppDao appDao;
 
         public InsertGroupAsyncTask(AppDao appDao) {
@@ -174,8 +196,7 @@ public void insertDocument(Document document)
         }
     }
 
-    private static class UpdateGroupAsyncTask extends AsyncTask<Group, Void, Void>
-    {
+    private static class UpdateGroupAsyncTask extends AsyncTask<Group, Void, Void> {
         private AppDao appDao;
 
         public UpdateGroupAsyncTask(AppDao appDao) {
@@ -189,8 +210,7 @@ public void insertDocument(Document document)
         }
     }
 
-    private static class DeleteGroupAsyncTask extends AsyncTask<Group, Void, Void>
-    {
+    private static class DeleteGroupAsyncTask extends AsyncTask<Group, Void, Void> {
         private AppDao appDao;
 
         public DeleteGroupAsyncTask(AppDao appDao) {
@@ -206,8 +226,7 @@ public void insertDocument(Document document)
 
 //    Document Async Tasks
 
-    private static class InsertDocumentAsyncTask extends AsyncTask<Document, Void, Void>
-    {
+    private static class InsertDocumentAsyncTask extends AsyncTask<Document, Void, Void> {
         private AppDao appDao;
 
         public InsertDocumentAsyncTask(AppDao appDao) {
@@ -221,8 +240,7 @@ public void insertDocument(Document document)
         }
     }
 
-    private static class UpdateDocumentAsyncTask extends AsyncTask<Document, Void, Void>
-    {
+    private static class UpdateDocumentAsyncTask extends AsyncTask<Document, Void, Void> {
         private AppDao appDao;
 
         public UpdateDocumentAsyncTask(AppDao appDao) {
@@ -236,8 +254,7 @@ public void insertDocument(Document document)
         }
     }
 
-    private static class DeleteDocumentAsyncTask extends AsyncTask<Document, Void, Void>
-    {
+    private static class DeleteDocumentAsyncTask extends AsyncTask<Document, Void, Void> {
         private AppDao appDao;
 
         public DeleteDocumentAsyncTask(AppDao appDao) {
@@ -251,3 +268,4 @@ public void insertDocument(Document document)
         }
     }
 }
+

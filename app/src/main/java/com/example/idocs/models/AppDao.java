@@ -12,6 +12,7 @@ import com.example.idocs.models.data.Group;
 import com.example.idocs.models.data.GroupWithDocuments;
 import com.example.idocs.models.data.Workspace;
 import com.example.idocs.models.data.WorkspaceWithGroup;
+import com.example.idocs.models.data.currentUser;
 
 import java.util.List;
 
@@ -59,5 +60,11 @@ public interface AppDao
     @Transaction
     @Query("SELECT * FROM GroupTable WHERE groupId = :groupId ORDER BY groupId DESC")
     LiveData<List<GroupWithDocuments>> getGroupWithDocuments(int groupId);
+
+    @Insert
+    void createUser(currentUser user);
+
+    @Update
+    void updateUser(currentUser user);
 }
 

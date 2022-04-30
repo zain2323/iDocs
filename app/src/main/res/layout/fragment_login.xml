@@ -1,107 +1,135 @@
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
     tools:context=".ui.views.LoginFragment">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/idocs_logo_without_background" />
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/login_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:text="Welcome Back"
-        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="20sp" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/idocs_logo_without_background" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/et_login_email"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="0dp"
-        android:textColorHint="@color/auth_label"
-        app:boxBackgroundColor="@color/auth_background"
-        app:boxStrokeColor="@color/auth_stroke"
-        app:endIconMode="none"
-        app:hintTextAppearance="@style/TextAppearance.Material3.BodyMedium"
-        app:hintTextColor="@color/auth_label">
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:text="Welcome Back"
+            android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="20sp" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_login_email"
             android:layout_width="300dp"
-            android:layout_height="match_parent"
-            android:hint="Email"
-            android:inputType="textEmailAddress" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="0dp"
+            android:textColorHint="@color/auth_label"
+            app:boxBackgroundColor="@color/auth_background"
+            app:boxStrokeColor="@color/auth_stroke"
+            app:endIconMode="none"
+            app:hintTextAppearance="@style/TextAppearance.Material3.BodyMedium"
+            app:hintTextColor="@color/auth_label">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/et_login_password"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="50dp"
-        android:textColorHint="@color/auth_label"
-        app:boxBackgroundColor="@color/auth_background"
-        app:boxStrokeColor="@color/auth_stroke"
-        app:endIconMode="password_toggle"
-        app:hintTextAppearance="@style/TextAppearance.Material3.BodyMedium"
-        app:hintTextColor="@color/auth_label">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_login_password"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="50dp"
+            android:textColorHint="@color/auth_label"
+            app:boxBackgroundColor="@color/auth_background"
+            app:boxStrokeColor="@color/auth_stroke"
+            app:endIconMode="password_toggle"
+            app:hintTextAppearance="@style/TextAppearance.Material3.BodyMedium"
+            app:hintTextColor="@color/auth_label">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="50dp"
+            android:backgroundTint="@color/auth_btn_color"
+            android:text="Log in" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="50dp"
-        android:backgroundTint="@color/auth_btn_color"
-        android:text="Log in" />
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:text="Forgot Password?"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="16sp" />
 
-    <com.google.android.material.textview.MaterialTextView
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:dividerInsetEnd="16dp"
+            app:dividerInsetStart="16dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_login_with_google"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="50dp"
+            android:backgroundTint="@color/auth_btn_color"
+            android:text="Log in with Google"
+            app:icon="@drawable/ic_google" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <ProgressBar
+        android:id="@+id/login_progress_bar"
+        style="?android:attr/progressBarStyleLarge"
+        android:indeterminateOnly="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/auth_btn_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
-        android:text="Forgot Password?"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="16sp" />
+        android:layout_alignParentEnd="true"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/login_linear_layout"
+        app:layout_constraintEnd_toEndOf="@+id/login_linear_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/login_linear_layout" />
 
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:dividerInsetStart="16dp"
-        app:dividerInsetEnd="16dp"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_login_with_google"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="50dp"
-        android:backgroundTint="@color/auth_btn_color"
-        app:icon="@drawable/ic_google"
-        android:text="Log in with Google" />
-
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>
