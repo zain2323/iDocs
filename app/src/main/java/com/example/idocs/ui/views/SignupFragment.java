@@ -17,15 +17,20 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.example.idocs.R;
-import com.example.idocs.ui.api.AppwriteClient;
-import com.example.idocs.ui.api.Authentication;
+import com.example.idocs.api.iDocsApi;
+import com.example.idocs.di.AppModule;
+import com.example.idocs.models.data.User;
 import com.example.idocs.ui.viewmodel.AppViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 
-import io.appwrite.Client;
+import io.appwrite.exceptions.AppwriteException;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignupFragment extends Fragment {
 
+    private View rootView;
     private TextInputLayout signupName;
     private TextInputLayout signupEmail;
     private TextInputLayout signupPassword;
@@ -33,6 +38,7 @@ public class SignupFragment extends Fragment {
     private Button signupWithGoogle;
     private ProgressBar signupProgressBar;
     private AppViewModel appViewModel;
+    private iDocsApi api;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,23 +51,21 @@ public class SignupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_signup, container, false);
+        rootView = inflater.inflate(R.layout.fragment_signup, container, false);
+        return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
+        api = AppModule.getApi();
         signupName = view.findViewById(R.id.et_signup_name);
         signupEmail = view.findViewById(R.id.et_signup_email);
         signupPassword = view.findViewById(R.id.et_signup_password);
         signup = view.findViewById(R.id.btn_signup);
         signupWithGoogle = view.findViewById(R.id.btn_signup_with_google);
         signupProgressBar = view.findViewById(R.id.signup_progress_bar);
-
-        Client client = AppwriteClient.createClient(getContext());
-        Authentication auth = new Authentication(client, getContext(), appViewModel);
-
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,7 +103,7 @@ public class SignupFragment extends Fragment {
                 signupPassword.setEnabled(false);
                 signup.setEnabled(false);
                 signupWithGoogle.setEnabled(false);
-                auth.signup(name, email, password, signupProgressBar);
+                createAccount(email, password, name);
             }
         });
 
@@ -108,6 +112,29 @@ public class SignupFragment extends Fragment {
             public void onClick(View view) {
                 Toast.makeText(getContext(), "Not supported yet", Toast.LENGTH_SHORT).show();
                 Navigation.findNavController(view).navigate(SignupFragmentDirections.actionSignupFragmentToWorkspaceFragment());
+            }
+        });
+    }
+
+    public void createAccount(String email, String password, String name) {
+        Call<User> call = api.createAccount("unique()", email, password, name);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(SignupFragment.this.getContext(), "Registration Failed", Toast.LENGTH_LONG).show();
+                    signupProgressBar.setVisibility(View.INVISIBLE);
+                    return;
+                }
+                Toast.makeText(SignupFragment.this.getContext(), "Account has been created", Toast.LENGTH_SHORT).show();
+                signupProgressBar.setVisibility(View.INVISIBLE);
+                Navigation.findNavController(rootView).navigate(SignupFragmentDirections.actionSignupFragmentToWorkspaceFragment());
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(SignupFragment.this.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                signupProgressBar.setVisibility(View.INVISIBLE);
             }
         });
     }

@@ -8,10 +8,10 @@ import androidx.lifecycle.LiveData;
 import com.example.idocs.models.data.Document;
 import com.example.idocs.models.data.Group;
 import com.example.idocs.models.data.GroupWithDocuments;
+import com.example.idocs.models.data.User;
 import com.example.idocs.models.data.Workspace;
 import com.example.idocs.models.data.WorkspaceDatabase;
 import com.example.idocs.models.data.WorkspaceWithGroup;
-import com.example.idocs.models.data.currentUser;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -38,25 +38,32 @@ public class AppRepository {
         new DeleteWorkspaceAsyncTask(appDao).execute(workspace);
     }
 
+    public LiveData<List<Workspace>> getAllWorkspaces() {
+        return allWorkspaces;
+    }
+
     public void deleteAllWorkspaces() {
         new DeleteAllWorkspacesAsyncTask(appDao).execute();
     }
 
 //    Current user methods
-
-    public void createUser(currentUser user) {
+    public void createUser(User user) {
         new CreateUserAsyncTask(appDao).execute(user);
     }
 
-    public void updateUser(currentUser user) {
+    public void updateUser(User user) {
         new UpdateUserAsyncTask(appDao).execute(user);
     }
 
-    //    Groups Methods
-    public LiveData<List<Workspace>> getAllWorkspaces() {
-        return allWorkspaces;
-    }
+//    public LiveData<List<User>> getUserBySessionId(String sessionId) {
+//        return appDao.getUserBySessionId(sessionId);
+//    }
+//
+//    public LiveData<List<User>> getUserById(String userId) {
+//        return appDao.getUserById(userId);
+//    }
 
+    //    Groups Methods
     public long insertGroup(Group group) throws ExecutionException, InterruptedException {
         long id = new InsertGroupAsyncTask(appDao).execute(group).get();
         return id;
@@ -152,7 +159,7 @@ public class AppRepository {
 
 //    Current user Async Tasks
 
-    private static class CreateUserAsyncTask extends AsyncTask<currentUser, Void, Void> {
+    private static class CreateUserAsyncTask extends AsyncTask<User, Void, Void> {
         private AppDao appDao;
 
         public CreateUserAsyncTask(AppDao appDao) {
@@ -160,13 +167,13 @@ public class AppRepository {
         }
 
         @Override
-        protected Void doInBackground(currentUser... users) {
+        protected Void doInBackground(User... users) {
             appDao.createUser(users[0]);
             return null;
         }
     }
 
-    private static class UpdateUserAsyncTask extends AsyncTask<currentUser, Void, Void> {
+    private static class UpdateUserAsyncTask extends AsyncTask<User, Void, Void> {
         private AppDao appDao;
 
         public UpdateUserAsyncTask(AppDao appDao) {
@@ -174,7 +181,7 @@ public class AppRepository {
         }
 
         @Override
-        protected Void doInBackground(currentUser... users) {
+        protected Void doInBackground(User... users) {
             appDao.updateUser(users[0]);
             return null;
         }

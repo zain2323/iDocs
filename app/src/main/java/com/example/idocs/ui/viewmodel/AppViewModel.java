@@ -12,7 +12,7 @@ import com.example.idocs.models.data.Group;
 import com.example.idocs.models.data.GroupWithDocuments;
 import com.example.idocs.models.data.Workspace;
 import com.example.idocs.models.data.WorkspaceWithGroup;
-import com.example.idocs.models.data.currentUser;
+import com.example.idocs.models.data.User;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -43,11 +43,11 @@ public class AppViewModel extends AndroidViewModel {
         appRepository.deleteAllWorkspaces();
     }
 
-    public void createUser(currentUser user) {
+    public void createUser(User user) {
         appRepository.createUser(user);
     }
 
-    public void updateUser(currentUser user) {
+    public void updateUser(User user) {
         appRepository.updateUser(user);
     }
 

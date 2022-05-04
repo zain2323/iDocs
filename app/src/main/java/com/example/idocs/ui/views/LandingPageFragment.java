@@ -38,12 +38,7 @@ public class LandingPageFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        Log.i("INFO", read_session_id());
-//        if (read_session_id() != null) {
-//            if (!read_session_id().equals("")) {
-//                Navigation.findNavController(view).navigate(LandingPageFragmentDirections.actionLandingPageFragmentToWorkspaceFragment());
-//            }
-//        }
+
         login = view.findViewById(R.id.btn_login_landing_page);
         signup = view.findViewById(R.id.btn_signup_landing_page);
 

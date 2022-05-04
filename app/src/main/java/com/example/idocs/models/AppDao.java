@@ -10,9 +10,9 @@ import androidx.room.Update;
 import com.example.idocs.models.data.Document;
 import com.example.idocs.models.data.Group;
 import com.example.idocs.models.data.GroupWithDocuments;
+import com.example.idocs.models.data.User;
 import com.example.idocs.models.data.Workspace;
 import com.example.idocs.models.data.WorkspaceWithGroup;
-import com.example.idocs.models.data.currentUser;
 
 import java.util.List;
 
@@ -62,9 +62,17 @@ public interface AppDao
     LiveData<List<GroupWithDocuments>> getGroupWithDocuments(int groupId);
 
     @Insert
-    void createUser(currentUser user);
+    void createUser(User user);
 
     @Update
-    void updateUser(currentUser user);
+    void updateUser(User user);
+
+//    @Transaction
+//    @Query("SELECT * FROM User WHERE session_id = :sessionId")
+//    LiveData<List<User>> getUserBySessionId(String sessionId);
+//
+//    @Transaction
+//    @Query("SELECT * FROM User WHERE user_id = :userId")
+//    LiveData<List<User>> getUserById(String userId);
 }
 
