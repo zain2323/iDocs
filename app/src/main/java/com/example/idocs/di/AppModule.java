@@ -49,22 +49,18 @@ public class AppModule {
 
     private static class SessionCookieJar implements CookieJar {
 
-        private List<Cookie> cookies;
+        private List<Cookie> cookies = new ArrayList<>();
 
         @Override
-        public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-            if (url.encodedPath().endsWith("sessions")) {
-                this.cookies = new ArrayList<>(cookies);
-            }
+        public void saveFromResponse(HttpUrl url, List<Cookie> cookieList) {
+            cookies.clear();
+            cookies.addAll(cookieList);
         }
 
 
         @Override
         public List<Cookie> loadForRequest(HttpUrl url) {
-            if (!url.encodedPath().endsWith("account") && cookies != null) {
-                return cookies;
-            }
-            return Collections.emptyList();
+            return cookies;
         }
     }
 

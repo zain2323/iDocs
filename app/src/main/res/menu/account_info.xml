@@ -5,6 +5,9 @@
         android:id="@+id/menu_info"
         android:title="Account Info" />
     <item
+        android:id="@+id/menu_logout"
+        android:title="Logout" />
+    <item
         android:id="@+id/menu_exit"
         android:title="Exit"
         android:icon="@drawable/cancel"

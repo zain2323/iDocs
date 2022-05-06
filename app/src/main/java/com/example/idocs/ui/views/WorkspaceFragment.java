@@ -8,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +23,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idocs.R;
+import com.example.idocs.api.Authentication;
 import com.example.idocs.api.iDocsApi;
+import com.example.idocs.callbacks.GenericCallback;
+import com.example.idocs.callbacks.GetUserCallback;
 import com.example.idocs.di.AppModule;
 import com.example.idocs.models.data.Workspace;
 import com.example.idocs.ui.adapters.WorkspaceAdapter;
@@ -32,7 +34,6 @@ import com.example.idocs.ui.viewmodel.AppViewModel;
 
 import java.util.List;
 
-import io.appwrite.exceptions.AppwriteException;
 import io.appwrite.models.User;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -135,37 +136,41 @@ public class WorkspaceFragment extends Fragment implements WorkspaceAdapter.OnIt
         int id = item.getItemId();
         if (id == R.id.menu_info)
         {
-            getCurrentUser();
+            GetUserCallback callback = new GetUserCallback() {
+                @Override
+                public void onSuccess(boolean val, User user) {
+                    Toast.makeText(getContext(), user.getName(), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure() {
+                    Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+                }
+            };
+            Authentication.getCurrentUser(getContext(), callback);
             return true;
         }
         else if (id == R.id.menu_exit)
         {
             getActivity().onBackPressed();
         }
+        else if (id == R.id.menu_logout) {
+            GenericCallback callback = new GenericCallback() {
+                @Override
+                public void onSuccess() {
+                    Navigation.findNavController(rootView).navigate(WorkspaceFragmentDirections.actionWorkspaceFragmentToLandingPageFragment());
+                }
+
+                @Override
+                public void onFailure() {
+                    Toast.makeText(getContext(),"Please login to continue", Toast.LENGTH_SHORT).show();
+                }
+            };
+            Authentication.logout(getContext(), callback);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
-    public User getCurrentUser() {
-        final User[] currentUser = {null};
-        Call<User> call = api.getCurrentUser();
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(WorkspaceFragment.this.getContext(), "Failed", Toast.LENGTH_SHORT).show();
-                    Log.e("ERROR", response.code()+"");
-                    return;
-                }
-                User user = response.body();
-                currentUser[0] = user;
-                Toast.makeText(WorkspaceFragment.this.getContext(), user.getName(), Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Log.e("ERROR", t.getMessage());
-            }
-        });
-        return currentUser[0];
-    }
 }
