@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,17 +24,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idocs.R;
+import com.example.idocs.api.iDocsApi;
+import com.example.idocs.di.AppModule;
 import com.example.idocs.models.data.Workspace;
 import com.example.idocs.ui.adapters.WorkspaceAdapter;
 import com.example.idocs.ui.viewmodel.AppViewModel;
 
 import java.util.List;
 
+import io.appwrite.exceptions.AppwriteException;
+import io.appwrite.models.User;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class WorkspaceFragment extends Fragment implements WorkspaceAdapter.OnItemClickListener {
     private RecyclerView workspaceRecyclerView;
     private AppViewModel appViewModel;
     private TextView newWorkspace;
     private View rootView;
+    private iDocsApi api;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +67,7 @@ public class WorkspaceFragment extends Fragment implements WorkspaceAdapter.OnIt
     @Override
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
-
+        api = AppModule.getApi();
         WorkspaceAdapter workspaceAdapter = new WorkspaceAdapter(this, getContext());
         appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
         appViewModel.getAllWorkspaces().observe((LifecycleOwner) getContext(), new Observer<List<Workspace>>() {
@@ -117,15 +127,15 @@ public class WorkspaceFragment extends Fragment implements WorkspaceAdapter.OnIt
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.show_map, menu);
+        inflater.inflate(R.menu.account_info, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.menu_show_map)
+        if (id == R.id.menu_info)
         {
-            Navigation.findNavController(rootView).navigate(WorkspaceFragmentDirections.actionWorkspaceFragmentToStationaryShopsFragment());
+            getCurrentUser();
             return true;
         }
         else if (id == R.id.menu_exit)
@@ -133,5 +143,29 @@ public class WorkspaceFragment extends Fragment implements WorkspaceAdapter.OnIt
             getActivity().onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public User getCurrentUser() {
+        final User[] currentUser = {null};
+        Call<User> call = api.getCurrentUser();
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(WorkspaceFragment.this.getContext(), "Failed", Toast.LENGTH_SHORT).show();
+                    Log.e("ERROR", response.code()+"");
+                    return;
+                }
+                User user = response.body();
+                currentUser[0] = user;
+                Toast.makeText(WorkspaceFragment.this.getContext(), user.getName(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("ERROR", t.getMessage());
+            }
+        });
+        return currentUser[0];
     }
 }

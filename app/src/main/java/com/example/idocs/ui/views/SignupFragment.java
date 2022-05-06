@@ -19,11 +19,10 @@ import androidx.navigation.Navigation;
 import com.example.idocs.R;
 import com.example.idocs.api.iDocsApi;
 import com.example.idocs.di.AppModule;
-import com.example.idocs.models.data.User;
 import com.example.idocs.ui.viewmodel.AppViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 
-import io.appwrite.exceptions.AppwriteException;
+import io.appwrite.models.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -124,6 +123,11 @@ public class SignupFragment extends Fragment {
                 if (!response.isSuccessful()) {
                     Toast.makeText(SignupFragment.this.getContext(), "Registration Failed", Toast.LENGTH_LONG).show();
                     signupProgressBar.setVisibility(View.INVISIBLE);
+                    signupName.setEnabled(true);
+                    signupEmail.setEnabled(true);
+                    signupPassword.setEnabled(true);
+                    signup.setEnabled(true);
+                    signupWithGoogle.setEnabled(true);
                     return;
                 }
                 Toast.makeText(SignupFragment.this.getContext(), "Account has been created", Toast.LENGTH_SHORT).show();
@@ -135,6 +139,11 @@ public class SignupFragment extends Fragment {
             public void onFailure(Call<User> call, Throwable t) {
                 Toast.makeText(SignupFragment.this.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 signupProgressBar.setVisibility(View.INVISIBLE);
+                signupName.setEnabled(true);
+                signupEmail.setEnabled(true);
+                signupPassword.setEnabled(true);
+                signup.setEnabled(true);
+                signupWithGoogle.setEnabled(true);
             }
         });
     }

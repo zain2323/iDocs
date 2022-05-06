@@ -31,13 +31,6 @@
                 android:name="workspace_id"
                 app:argType="integer" />
         </action>
-        <action
-            android:id="@+id/action_workspaceFragment_to_stationaryShopsFragment"
-            app:destination="@id/stationaryShopsFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/createNewWorkspaceFragment"
@@ -164,27 +157,6 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/mapsFragment"
-        android:name="com.example.idocs.ui.views.MapsFragment"
-        android:label="Shop"
-        tools:layout="@layout/fragment_maps" />
-    <fragment
-        android:id="@+id/stationaryShopsFragment"
-        android:name="com.example.idocs.ui.views.StationaryShopsFragment"
-        android:label="Stationary Shops"
-        tools:layout="@layout/fragment_stationary_shops">
-        <action
-            android:id="@+id/action_stationaryShopsFragment_to_mapsFragment"
-            app:destination="@id/mapsFragment">
-            <argument
-                android:name="x_coordinate"
-                app:argType="float" />
-            <argument
-            android:name="y_coordinate"
-            app:argType="float" />
-        </action>
     </fragment>
     <fragment
         android:id="@+id/landingPageFragment"

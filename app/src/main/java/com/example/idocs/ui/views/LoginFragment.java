@@ -3,15 +3,12 @@ package com.example.idocs.ui.views;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -24,7 +21,6 @@ import androidx.navigation.Navigation;
 import com.example.idocs.R;
 import com.example.idocs.api.iDocsApi;
 import com.example.idocs.di.AppModule;
-import com.example.idocs.models.data.User;
 import com.example.idocs.ui.viewmodel.AppViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -111,7 +107,6 @@ public class LoginFragment extends Fragment {
                 loginWithGoogle.setEnabled(false);
                 login.setEnabled(false);
                 login(email, password);
-
             }
         });
 
@@ -136,38 +131,12 @@ public class LoginFragment extends Fragment {
     }
 
 
-    public void getUserById(EditText textView) {
-        Call<User> call = api.getUserById("6269e9508838e69bb7ca");
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (!response.isSuccessful()) {
-                    textView.setText("Code: " + response.code());
-                    return;
-                }
-
-                User user = response.body();
-                String content = "";
-                content += "ID: " + user.getId();
-                content += "Name: " + user.getName();
-                content += "Email: " + user.getEmail();
-                textView.setText(content);
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                textView.setText(t.getMessage());
-            }
-        });
-    }
-
     public void login(String email, String password) {
         Call<Session> call = api.login(email, password);
         call.enqueue(new Callback<Session>() {
             @Override
             public void onResponse(Call<Session> call, Response<Session> response) {
                 if (!response.isSuccessful()) {
-                    Log.i("ERROR BODY", response.raw().message());
                     Toast.makeText(LoginFragment.this.getContext(), "Login Failed", Toast.LENGTH_SHORT).show();
                     loginProgressBar.setVisibility(View.INVISIBLE);
                     loginEmail.setEnabled(true);
@@ -185,8 +154,11 @@ public class LoginFragment extends Fragment {
             public void onFailure(Call<Session> call, Throwable t) {
                 Toast.makeText(LoginFragment.this.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 loginProgressBar.setVisibility(View.INVISIBLE);
+                loginEmail.setEnabled(true);
+                loginPassword.setEnabled(true);
+                loginWithGoogle.setEnabled(true);
+                login.setEnabled(true);
             }
         });
     }
-
 }
