@@ -110,7 +110,6 @@ public class SignupFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), "Not supported yet", Toast.LENGTH_SHORT).show();
-                Navigation.findNavController(view).navigate(SignupFragmentDirections.actionSignupFragmentToWorkspaceFragment());
             }
         });
     }

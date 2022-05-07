@@ -58,4 +58,24 @@ public class Authentication {
             }
         });
     }
+
+    public static void oAuthWithGoogle(Context context, GenericCallback callback) {
+        Call<Void> call = api.oAauthWithGoogle();
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (!response.isSuccessful()) {
+                    Log.e("ERROR", response.code() + "");
+                }
+                Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show();
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("ERROR", t.getMessage());
+                callback.onFailure();
+            }
+        });
+    }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +20,24 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.example.idocs.R;
+import com.example.idocs.api.Authentication;
 import com.example.idocs.api.iDocsApi;
+import com.example.idocs.callbacks.GenericCallback;
 import com.example.idocs.di.AppModule;
 import com.example.idocs.ui.viewmodel.AppViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.jetbrains.annotations.NotNull;
+
+import io.appwrite.Client;
+import io.appwrite.exceptions.AppwriteException;
 import io.appwrite.models.Session;
+import io.appwrite.services.Account;
+import kotlin.Result;
+import kotlin.Unit;
+import kotlin.coroutines.Continuation;
+import kotlin.coroutines.CoroutineContext;
+import kotlin.coroutines.EmptyCoroutineContext;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,8 +51,6 @@ public class LoginFragment extends Fragment {
     private Button loginWithGoogle;
     private ProgressBar loginProgressBar;
     private AppViewModel appViewModel;
-    private static SharedPreferences current_user_session_shared_pref;
-    public static String session_id;
     iDocsApi api;
 
     @Override
@@ -61,13 +72,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        current_user_session_shared_pref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        session_id = read_session_id();
-        if (session_id != null) {
-            if (!session_id.equals("")) {
-                Navigation.findNavController(view).navigate(LoginFragmentDirections.actionLoginFragmentToWorkspaceFragment());
-            }
-        }
         appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
         loginEmail = view.findViewById(R.id.et_login_email);
         loginPassword = view.findViewById(R.id.et_login_password);
@@ -113,21 +117,9 @@ public class LoginFragment extends Fragment {
         loginWithGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Not supported yet", Toast.LENGTH_SHORT).show();
-                Navigation.findNavController(view).navigate(LoginFragmentDirections.actionLoginFragmentToWorkspaceFragment());
+                Toast.makeText(getContext(), "Not supported yet!!", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    public static void save_session_id(String session_id) {
-        SharedPreferences.Editor editor = current_user_session_shared_pref.edit();
-        editor.putString("COM.EXAMPLE.IDOCS.UI.VIEWS.LOGIN_FRAGMENT_CURRENT_USER_SESSION_ID", session_id);
-        editor.apply();
-    }
-
-    public static String read_session_id() {
-        String session_id = current_user_session_shared_pref.getString("COM.EXAMPLE.IDOCS.UI.VIEWS.LOGIN_FRAGMENT_CURRENT_USER_SESSION_ID", "");
-        return session_id;
     }
 
 

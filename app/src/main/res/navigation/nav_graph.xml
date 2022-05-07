@@ -33,6 +33,10 @@
         </action>
         <action
             android:id="@+id/action_workspaceFragment_to_landingPageFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/slide_out_top"
+            app:popEnterAnim="@anim/slide_in_top"
+            app:popExitAnim="@anim/slide_out_bottom"
             app:destination="@id/landingPageFragment" />
     </fragment>
     <fragment
@@ -182,6 +186,10 @@
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_landingPageFragment_to_workspaceFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/slide_out_top"
+            app:popEnterAnim="@anim/slide_in_top"
+            app:popExitAnim="@anim/slide_out_bottom"
             app:destination="@id/workspaceFragment" />
     </fragment>
     <fragment
